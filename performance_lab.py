@@ -51,12 +51,13 @@ def remove_duplicates(nums):
 
 """
 Time and Space Analysis for problem 2:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n) when everything is unique or identical each is only checked once.
+- Worst-case: O(n) Set membership and insertion end up being 0(1) on average.
+- Average-case: O(n)
+- Space complexity:O(n) This is because lists can hold n items when no duplicates are present in the list.
+- Why this approach? A hashmap is great when doing constant counting and checking for membership, which helps in efficiently removing duplicates while preserving order in the list.
+- Could it be optimized? I have no idea from what I know about this problem, but using a set for membership checks is already quite efficient. I usually would use stack overflow or look at alternative solutions on Leetcode.
+- Trade offs? The trade-off is that we use extra space to store the set of seen elements, but this allows us to achieve O(n) time complexity.
 """
 
 
@@ -69,17 +70,27 @@ Time and Space Analysis for problem 2:
 # Output: [(1, 4), (2, 3)]
 
 def find_pairs(nums, target):
-    # Your code here
-    pass
+    pairs = []
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                pairs.append((nums[i], nums[j]))
+    return pairs
 
+#tests
+print(find_pairs([1, 2, 3, 4], 5))  # Expected output: [(1, 4), (2, 3)]
+print(find_pairs([], 6))  # empty list
+print(find_pairs([7], 7))  # same pair
+print(find_pairs([1, 2, 3, -4], 5))  # Expected output: [(1, 4), (2, 3)]
 """
 Time and Space Analysis for problem 3:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n^2) because nested loops iterate over all pairs. even with no valid pairing
+- Worst-case: O(n^2) because nested loops iterate over all pairs. even with no valid pairing it still checks every element pairing once.
+- Average-case: O(n^2) Because its always dependent on the lists length not the values in the lists.
+- Space complexity:O(1) only loop counters get used for this which lists can hold up to n/2 for the pairs but still considered constant space relative to the input size.
+- Why this approach? It came to me simply because of the wording whenever I think of a problem refering a list and its order doesnt matter I tend to go towards len for counting the size.
+- Could it be optimized? Yes 100% I looked at this problem on leetcode and there are more efficient ways using hash sets. Theres also faster ways using two-pointer techniques if the list is sorted.
+- Trade-offs: The nested loop approach is simple and uses minimal extra space, but it is not the most efficient in terms of time complexity.
 """
 
 
