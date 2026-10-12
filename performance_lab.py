@@ -29,6 +29,7 @@ Time and Space Analysis for problem 1:
 - Space complexity: O(k) where k is the number of unique elements in the list if every value is unique.
 - Why this approach? This approach uses a dictionary to count the frequency of each element in a single pass which is efficient and straightforward compared to a loop or any alternative.
 - Could it be optimized? Im pretty sure this is the best it gets I know theres certain edge cases where the way the data is interpreted could affect performance, but overall this is efficient.
+- Trade offs? The trade-off is that we use extra space to store the counts in the dictionary but this allows us to achieve O(n) time complexity.
 """
 
 
@@ -40,8 +41,13 @@ Time and Space Analysis for problem 1:
 # Output: [4, 5, 6, 7]
 
 def remove_duplicates(nums):
-    # Your code here
-    pass
+    seen = set()
+    result = []
+    for num in nums:
+        if num not in seen:
+            seen.add(num)
+            result.append(num)
+    return result
 
 """
 Time and Space Analysis for problem 2:
