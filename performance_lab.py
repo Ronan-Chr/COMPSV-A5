@@ -145,15 +145,26 @@ Time and Space Analysis for problem 4:
 # Because: [1, 1+2, 1+2+3, 1+2+3+4]
 
 def running_total(nums):
-    # Your code here
-    pass
+    result = []
+    for i in range(len(nums)):
+        total = 0
+        for j in range(i + 1):
+            total = total + nums[j]
+        result.append(total)
+    return result
+
+# Tests
+print(running_total([1, 2, 3, 4]))  # Expected output: [1, 3, 6, 10]
+print(running_total([0, 0, 0]))    # Expected output: [0, 0, 0]
+print(running_total([5]))         # Expected output: [5]
+print(running_total([]))          # Expected output: []
 
 """
 Time and Space Analysis for problem 5:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(N^2) Each and every index in the inner loop adds the corresponding element to the running total.
+- Worst-case: O(N^2) Same as the best-case and average-case because the nested loop structure always results in quadratic time complexity.
+- Average-case: O(N^2) The value of each element in the list is added to the running total, resulting in a nested loop structure.
+- Space complexity: O(N) because we create a new list to store the running totals.
+- Why this approach? This approach is straightforward and easy to understand, but it is not the most efficient in terms of time complexity.
+- Could it be optimized? Yes, by keeping a running sum as we iterate through the list, we can reduce the time complexity to O(N).
 """
