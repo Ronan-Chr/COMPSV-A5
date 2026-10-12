@@ -103,16 +103,35 @@ Time and Space Analysis for problem 3:
 # add_n_items(6) → should print when resizing happens.
 
 def add_n_items(n):
-    # Your code here
-    pass
+    capacity = 4  # Initial capacity of the list
+    my_list = []  # Start with an empty list
+
+    for i in range(n):
+        if len(my_list) == capacity:
+            print("List full, resizing from", capacity, "to", capacity * 2)
+            capacity = capacity * 2
+            new_list = []
+            for item in my_list:
+                new_list.append(item)
+                print("Copying", item)
+            my_list = new_list
+
+        my_list.append(i)  # Add the new item to the list
+        print("Added", i, "- size: ", len(my_list), "capacity: ", capacity)
+    return my_list
+
+print(add_n_items(1)) # just one item, should not trigger resizing
+print(add_n_items(10)) # more than initial capacity, should trigger resizing
+print(add_n_items(0)) # nothing added, should return an empty list
+
 
 """
 Time and Space Analysis for problem 4:
-- When do resizes happen?
-- What is the worst-case for a single append?
-- What is the amortized time per append overall?
-- Space complexity:
-- Why does doubling reduce the cost overall?
+- When do resizes happen? Whenever the list reaches its current capacity which for my solution is 4 initially and then doubles each time that the list is full.
+- What is the worst-case for a single append? O(n) because it may trigger a resize and copy all existing elements onto a new list which is proportional to the current size of the list.
+- What is the amortized time per append overall? O(1) because the appends with the resizing cost are spread out over multiple operations so its not very time intensive. The actual copies of the list are what are expensive but they dont happen often.
+- Space complexity: O(n) because the list grows to hold all n elements, and during resizing theres two lists in the memory for a short period while copying and updating occurs simultaneously.
+- Why does doubling reduce the cost overall? Because the list holds the time as n and during resizing two lists are held in the memory for while copying and updating occurs, but the cost is spread out over multiple appends, making the amortized cost low.
 """
 
 
