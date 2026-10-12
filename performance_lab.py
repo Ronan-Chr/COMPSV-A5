@@ -21,12 +21,17 @@ def most_frequent(numbers):
             best_value = num
     return best_value
 
+# tests
+print(most_frequent([1, 3, 2, 3, 4, 1, 3]))  # Expected output: 3
+print(most_frequent([]))  # Expected output: None
+print(most_frequent([5]))  # Expected output: 5
+print(most_frequent([1, 2]))  # Expected output: 1 or 2 
 """
 Time and Space Analysis for problem 1:
 - Best-case: O(n) - when all elements are unique so it is counted, its hard to predict without the entire list itll beused on.
 - Worst-case: O(n) - one pass through the list to count frequencies. The dictionary lookups are O(1) on average.
 - Average-case:O(n)
-- Space complexity: O(k) where k is the number of unique elements in the list if every value is unique.
+- Space complexity: O(k) where k is the number of unique elements in the list if every value is unique thats the worst case resulting in O(n).
 - Why this approach? This approach uses a dictionary to count the frequency of each element in a single pass which is efficient and straightforward compared to a loop or any alternative.
 - Could it be optimized? Im pretty sure this is the best it gets I know theres certain edge cases where the way the data is interpreted could affect performance, but overall this is efficient.
 - Trade offs? The trade-off is that we use extra space to store the counts in the dictionary but this allows us to achieve O(n) time complexity.
@@ -49,14 +54,19 @@ def remove_duplicates(nums):
             result.append(num)
     return result
 
+#tests
+print(remove_duplicates([4, 5, 4, 6, 5, 7]))  # Expected output: [4, 5, 6, 7]
+print(remove_duplicates([]))  # Expected output: []
+print(remove_duplicates([1]))  # Expected output: [1]
+print(remove_duplicates([1, 2, 2, 3]))  # Expected output: [1, 2, 3]
 """
 Time and Space Analysis for problem 2:
 - Best-case: O(n) when everything is unique or identical each is only checked once.
-- Worst-case: O(n) Set membership and insertion end up being 0(1) on average.
+- Worst-case: O(n) Set membership and insertion end up being O(1) on average.
 - Average-case: O(n)
 - Space complexity:O(n) This is because lists can hold n items when no duplicates are present in the list.
 - Why this approach? A hashmap is great when doing constant counting and checking for membership, which helps in efficiently removing duplicates while preserving order in the list.
-- Could it be optimized? I have no idea from what I know about this problem, but using a set for membership checks is already quite efficient. I usually would use stack overflow or look at alternative solutions on Leetcode.
+- Could it be optimized? Its in O(n) already but the constant factor could be improved by using a more efficient data structure or algorithm if needed given different amounts of data or use cases.
 - Trade offs? The trade-off is that we use extra space to store the set of seen elements, but this allows us to achieve O(n) time complexity.
 """
 
@@ -81,13 +91,13 @@ def find_pairs(nums, target):
 print(find_pairs([1, 2, 3, 4], 5))  # Expected output: [(1, 4), (2, 3)]
 print(find_pairs([], 6))  # empty list
 print(find_pairs([7], 7))  # same pair
-print(find_pairs([1, 2, 3, -4], 5))  # Expected output: [(1, 4), (2, 3)]
+print(find_pairs([1, 2, 3, -4], 5))  # Expected output: [(2, 3)]
 """
 Time and Space Analysis for problem 3:
 - Best-case: O(n^2) because nested loops iterate over all pairs. even with no valid pairing
 - Worst-case: O(n^2) because nested loops iterate over all pairs. even with no valid pairing it still checks every element pairing once.
 - Average-case: O(n^2) Because its always dependent on the lists length not the values in the lists.
-- Space complexity:O(1) only loop counters get used for this which lists can hold up to n/2 for the pairs but still considered constant space relative to the input size.
+- Space complexity:O(1) extra space not counting the output list.
 - Why this approach? It came to me simply because of the wording whenever I think of a problem refering a list and its order doesnt matter I tend to go towards len for counting the size.
 - Could it be optimized? Yes 100% I looked at this problem on leetcode and there are more efficient ways using hash sets. Theres also faster ways using two-pointer techniques if the list is sorted.
 - Trade-offs: The nested loop approach is simple and uses minimal extra space, but it is not the most efficient in terms of time complexity.
@@ -131,7 +141,7 @@ Time and Space Analysis for problem 4:
 - What is the worst-case for a single append? O(n) because it may trigger a resize and copy all existing elements onto a new list which is proportional to the current size of the list.
 - What is the amortized time per append overall? O(1) because the appends with the resizing cost are spread out over multiple operations so its not very time intensive. The actual copies of the list are what are expensive but they dont happen often.
 - Space complexity: O(n) because the list grows to hold all n elements, and during resizing theres two lists in the memory for a short period while copying and updating occurs simultaneously.
-- Why does doubling reduce the cost overall? Because the list holds the time as n and during resizing two lists are held in the memory for while copying and updating occurs, but the cost is spread out over multiple appends, making the amortized cost low.
+- Why does doubling reduce the cost overall? Because the list holds the time as n and during resizing two lists are held in the memory for while copying and updating occurs, resizing makes the capacity double each time getting rarer and rarer each append costing O(1).
 """
 
 
@@ -167,4 +177,24 @@ Time and Space Analysis for problem 5:
 - Space complexity: O(N) because we create a new list to store the running totals.
 - Why this approach? This approach is straightforward and easy to understand, but it is not the most efficient in terms of time complexity.
 - Could it be optimized? Yes, by keeping a running sum as we iterate through the list, we can reduce the time complexity to O(N).
+- Trade-off: The way I approached it recalculates the entire list for each index, leading to a higher time complexity because each count costs O(N) time.
 """
+
+# OPTIMIZED VERSION OF # 5 
+def running_total_optimized(nums):
+    result = []
+    total = 0
+    for num in nums:
+        total += num
+        result.append(total)
+    return result
+
+#tests 
+print(running_total_optimized([1, 2, 3, 4]))  # Expected output: [1, 3, 6, 10]
+print(running_total_optimized([0, 0, 0]))    # Expected output: [0, 0, 0]
+print(running_total_optimized([5]))         # Expected output: [5]
+print(running_total_optimized([]))          # Expected output: []
+ 
+ # Keeps the one running sum for the list instead of readding the whole index each time, reducing the time complexity to O(N).
+ # The original attempt of # 5 was O(N^2) because it used a nested loop to readd every element up to the each time.
+ # They both result in a new list being created, so the space complexity remains O(N) for both versions.
