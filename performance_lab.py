@@ -7,17 +7,28 @@
 # Output: 3
 
 def most_frequent(numbers):
-    # Your code here
-    pass
+    if not numbers:
+        return None #in case there are no numbers
+
+    counts = {}
+    best_value = numbers[0]
+    best_count = 0
+
+    for num in numbers:
+        counts[num] = counts.get(num, 0) + 1
+        if counts[num] > best_count:
+            best_count = counts[num]
+            best_value = num
+    return best_value
 
 """
 Time and Space Analysis for problem 1:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n) - when all elements are unique so it is counted, its hard to predict without the entire list itll beused on.
+- Worst-case: O(n) - one pass through the list to count frequencies. The dictionary lookups are O(1) on average.
+- Average-case:O(n)
+- Space complexity: O(k) where k is the number of unique elements in the list if every value is unique.
+- Why this approach? This approach uses a dictionary to count the frequency of each element in a single pass which is efficient and straightforward compared to a loop or any alternative.
+- Could it be optimized? Im pretty sure this is the best it gets I know theres certain edge cases where the way the data is interpreted could affect performance, but overall this is efficient.
 """
 
 
